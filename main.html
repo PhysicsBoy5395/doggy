@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dog</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: black;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <img id="dog" alt="Loading dog...">
+
+    <script>
+        async function loadDog() {
+            try {
+                const response = await fetch(
+                    "https://dog.ceo/api/breeds/image/random"
+                );
+
+                if (!response.ok) {
+                    throw new Error("API request failed");
+                }
+
+                const data = await response.json();
+
+                const img = document.getElementById("dog");
+                img.src = data.message;
+
+                img.onerror = () => {
+                    console.log("Image failed to load:", data.message);
+                };
+
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        loadDog();
+    </script>
+
+</body>
+</html>
